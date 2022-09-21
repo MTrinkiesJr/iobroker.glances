@@ -1,0 +1,32 @@
+{
+	"i18n": true,
+	"type": "panel",
+	"items": {
+		"hostname": {
+			"type": "text",
+			"label": "Hostname"
+		},
+		"port": {
+			"type": "number",
+			"label": "Port"
+		},
+		"interval": {
+			"type": "number",
+			"label": "Interval",
+			"newLine": true
+		},
+		"cpu": {
+			"type": "checkbox",
+			"label": "CPU",
+			"newLine": true
+		},
+		"mem": {
+			"type": "checkbox",
+			"label": "Memory"
+		},
+		"disk": {
+			"type": "checkbox",
+			"label": "Disk"
+		}
+	}
+}

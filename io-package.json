@@ -1,0 +1,287 @@
+{
+	"common": {
+		"name": "glances",
+		"version": "0.0.1",
+		"news": {
+			"0.0.1": {
+				"en": "initial release",
+				"de": "Erstveröffentlichung",
+				"ru": "Начальная версия",
+				"pt": "lançamento inicial",
+				"nl": "Eerste uitgave",
+				"fr": "Première version",
+				"it": "Versione iniziale",
+				"es": "Versión inicial",
+				"pl": "Pierwsze wydanie",
+				"zh-cn": "首次出版"
+			}
+		},
+		"title": "Glances",
+		"titleLang": {
+			"en": "Glances",
+			"de": "Glances",
+			"ru": "Glances",
+			"pt": "Glances",
+			"nl": "Glances",
+			"fr": "Glances",
+			"it": "Glances",
+			"es": "Glances",
+			"pl": "Glances",
+			"zh-cn": "Glances"
+		},
+		"desc": {
+			"en": "Imports system data from Glances via the integrated server",
+			"de": "Importiert Systemdaten aus Glances über den integrierten Server",
+			"ru": "Импорт системных данных из Glances через встроенный сервер",
+			"pt": "Importa dados do sistema de Glances através do servidor integrado",
+			"nl": "Importeert systeemgegevens uit Glances via de geïntegreerde server",
+			"fr": "Importe les données système de Glances via le serveur intégré",
+			"it": "Importa i dati di sistema da Glances tramite il server integrato",
+			"es": "Importa datos del sistema de Glances a través del servidor integrado",
+			"pl": "Importuje dane systemowe z Glances za pośrednictwem zintegrowanego serwera",
+			"zh-cn": "通过集成服务器从 Glances 导入系统数据"
+		},
+		"authors": [
+			"Michael Trinkies <info@mtrinkies.de>"
+		],
+		"keywords": [
+			"glances",
+			"cpu",
+			"ram",
+			"disk",
+			"monitoring"
+		],
+		"license": "MIT",
+		"platform": "Javascript/Node.js",
+		"main": "main.js",
+		"icon": "glances.png",
+		"enabled": true,
+		"extIcon": "https://raw.githubusercontent.com/Michael Trinkies/ioBroker.glances/main/admin/glances.png",
+		"readme": "https://github.com/Michael Trinkies/ioBroker.glances/blob/main/README.md",
+		"loglevel": "info",
+		"mode": "daemon",
+		"type": "misc-data",
+		"compact": true,
+		"connectionType": "local",
+		"dataSource": "poll",
+		"adminUI": {
+			"config": "json"
+		},
+		"dependencies": [
+			{
+				"js-controller": ">=3.3.22"
+			}
+		],
+		"globalDependencies": [
+			{
+				"admin": ">=5.1.13"
+			}
+		]
+	},
+	"native": {
+		"hostname": "localhost",
+		"port": 61208,
+		"interval": "10000",
+		"cpu": true,
+		"mem": true,
+		"disk": true
+	},
+	"objects": [],
+	"instanceObjects": [
+		{
+			"_id": "info",
+			"type": "channel",
+			"common": {
+				"name": "Information"
+			},
+			"native": {}
+		},
+		{
+			"_id": "info.connection",
+			"type": "state",
+			"common": {
+				"role": "indicator.connected",
+				"name": "Device or service connected",
+				"type": "boolean",
+				"read": true,
+				"write": false,
+				"def": false
+			},
+			"native": {}
+		},
+		{
+			"_id": "info.name",
+			"type": "state",
+			"common": {
+				"name": "Hostname of the remote server",
+				"type": "string",
+				"read": true,
+				"write": false
+			},
+			"native": {}
+		},
+		{
+			"_id": "info.os",
+			"type": "state",
+			"common": {
+				"name": "Name of operating system",
+				"type": "string",
+				"read": true,
+				"write": false
+			},
+			"native": {}
+		},
+		{
+			"_id": "info.osversion",
+			"type": "state",
+			"common": {
+				"name": "Version of operating system",
+				"type": "string",
+				"read": true,
+				"write": false
+			},
+			"native": {}
+		},
+		{
+			"_id": "info.distro",
+			"type": "state",
+			"common": {
+				"name": "Operating system distro name",
+				"type": "string",
+				"read": true,
+				"write": false
+			},
+			"native": {}
+		},
+		{
+			"_id": "info.osfullname",
+			"type": "state",
+			"common": {
+				"name": "Full operating system name",
+				"type": "string",
+				"read": true,
+				"write": false
+			},
+			"native": {}
+		},
+		{
+			"_id": "cpu",
+			"type": "channel",
+			"common": {
+				"name": "CPU"
+			},
+			"native": {}
+		},
+		{
+			"_id": "cpu.cores",
+			"type": "state",
+			"common": {
+				"name": "Count of CPU cores",
+				"type": "number",
+				"read": true,
+				"write": false
+			},
+			"native": {}
+		},
+		{
+			"_id": "cpu.total",
+			"type": "state",
+			"common": {
+				"name": "Total CPU usage",
+				"type": "number",
+				"unit": "%",
+				"read": true,
+				"write": false
+			},
+			"native": {}
+		},
+		{
+			"_id": "cpu.idle",
+			"type": "state",
+			"common": {
+				"name": "Idle CPU usage",
+				"type": "number",
+				"unit": "%",
+				"read": true,
+				"write": false
+			},
+			"native": {}
+		},
+		{
+			"_id": "cpu.user",
+			"type": "state",
+			"common": {
+				"name": "User CPU usage",
+				"type": "number",
+				"unit": "%",
+				"read": true,
+				"write": false
+			},
+			"native": {}
+		},
+		{
+			"_id": "cpu.system",
+			"type": "state",
+			"common": {
+				"name": "System CPU usage",
+				"type": "number",
+				"unit": "%",
+				"read": true,
+				"write": false
+			},
+			"native": {}
+		},
+		{
+			"_id": "mem",
+			"type": "channel",
+			"common": {
+				"name": "MEMORY"
+			},
+			"native": {}
+		},
+		{
+			"_id": "mem.total",
+			"type": "state",
+			"common": {
+				"name": "Total physical memory available",
+				"type": "number",
+				"unit": "B",
+				"read": true,
+				"write": false
+			},
+			"native": {}
+		},
+		{
+			"_id": "mem.available",
+			"type": "state",
+			"common": {
+				"name": "The actual amount of available memory",
+				"type": "number",
+				"unit": "B",
+				"read": true,
+				"write": false
+			},
+			"native": {}
+		},
+		{
+			"_id": "mem.percent",
+			"type": "state",
+			"common": {
+				"name": "The percentage usage calculated as (total - available) / total * 100",
+				"type": "number",
+				"unit": "%",
+				"read": true,
+				"write": false
+			},
+			"native": {}
+		},
+		{
+			"_id": "disk",
+			"type": "channel",
+			"common": {
+				"name": "DISK"
+			},
+			"native": {}
+		}
+	]
+}
