@@ -252,12 +252,57 @@
 			"native": {}
 		},
 		{
+			"_id": "mem.total_h",
+			"type": "state",
+			"common": {
+				"name": "Total physical memory available human readable",
+				"type": "number",
+				"read": true,
+				"write": false
+			},
+			"native": {}
+		},
+		{
 			"_id": "mem.available",
 			"type": "state",
 			"common": {
 				"name": "The actual amount of available memory",
 				"type": "number",
 				"unit": "B",
+				"read": true,
+				"write": false
+			},
+			"native": {}
+		},
+		{
+			"_id": "mem.available_h",
+			"type": "state",
+			"common": {
+				"name": "The actual amount of available memory human readable",
+				"type": "number",
+				"read": true,
+				"write": false
+			},
+			"native": {}
+		},
+		{
+			"_id": "mem.used",
+			"type": "state",
+			"common": {
+				"name": "The actual amount of used memory",
+				"type": "number",
+				"unit": "B",
+				"read": true,
+				"write": false
+			},
+			"native": {}
+		},
+		{
+			"_id": "mem.used_h",
+			"type": "state",
+			"common": {
+				"name": "The actual amount of used memory human readable",
+				"type": "number",
 				"read": true,
 				"write": false
 			},

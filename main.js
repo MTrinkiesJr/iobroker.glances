@@ -103,8 +103,44 @@ class Glances extends utils.Adapter {
 			try {
 				const response = await axios.default.get("http://" + this.config.hostname + ":" + this.config.port + "/api/3/mem");
 				if (response.status == 200) {
+					//mem total
 					await this.setStateAsync("mem.total", response.data.total, true);
+					var total_h = this.calcSize(response.data.total);
+					await this.setStateAsync("mem.total_h", total_h.val, true);
+					await this.extendObjectAsync("mem.total_h", {
+						type: "state",
+						common: {
+							unit: total_h.unit
+						},
+						native: {}
+					});
+
+
+					//mem available
 					await this.setStateAsync("mem.available", response.data.available, true);
+					var available_h = this.calcSize(response.data.available);
+					await this.setStateAsync("mem.available_h", available_h.val, true);
+					await this.extendObjectAsync("mem.available_h", {
+						type: "state",
+						common: {
+							unit: available_h.unit
+						},
+						native: {}
+					});
+
+					//mem used						
+					await this.setStateAsync("mem.used", response.data.total - response.data.available, true);
+					var used_h = this.calcSize(response.data.used);
+					await this.setStateAsync("mem.used_h", used_h.val, true);
+					await this.extendObjectAsync("mem.used_h", {
+						type: "state",
+						common: {
+							unit: used_h.unit
+						},
+						native: {}
+					});
+
+					//mem percent
 					await this.setStateAsync("mem.percent", response.data.percent, true);
 				}
 			} catch (error) {
@@ -119,6 +155,8 @@ class Glances extends utils.Adapter {
 					for (var i = 0; i < response.data.length; i++) {
 						var disk = response.data[i];
 
+
+						//disk name
 						await this.setObjectNotExistsAsync("disk." + disk.device_name, {
 							type: "device",
 							common: {
@@ -127,6 +165,8 @@ class Glances extends utils.Adapter {
 							native: {},
 						});
 
+
+						//disk mountpoint
 						await this.setObjectNotExistsAsync("disk." + disk.device_name + ".mountpoint", {
 							type: "state",
 							common: {
@@ -140,7 +180,7 @@ class Glances extends utils.Adapter {
 						});
 						await this.setStateAsync("disk." + disk.device_name + ".mountpoint", disk.mnt_point, true);
 
-
+						//disk size
 						await this.setObjectNotExistsAsync("disk." + disk.device_name + ".size", {
 							type: "state",
 							common: {
@@ -155,10 +195,27 @@ class Glances extends utils.Adapter {
 						});
 						await this.setStateAsync("disk." + disk.device_name + ".size", disk.size, true);
 
+						//disk size human readable
+						var disk_size_h = this.calcSize(disk.size);
+						await this.setObjectNotExistsAsync("disk." + disk.device_name + ".size", {
+							type: "state",
+							common: {
+								name: "Total size human readable",
+								"role": "text",
+								"type": "number",
+								"unit": disk_size_h.unit,
+								"read": true,
+								"write": false
+							},
+							native: {},
+						});
+						await this.setStateAsync("disk." + disk.device_name + ".size_h", disk_size_h.val, true);
+
+						//disk used size
 						await this.setObjectNotExistsAsync("disk." + disk.device_name + ".used", {
 							type: "state",
 							common: {
-								name: "Total size",
+								name: "Used size",
 								"role": "text",
 								"type": "number",
 								"unit": "B",
@@ -169,10 +226,27 @@ class Glances extends utils.Adapter {
 						});
 						await this.setStateAsync("disk." + disk.device_name + ".used", disk.used, true);
 
+						//disk used size human readable
+						var disk_used_h = this.calcSize(disk.used);
+						await this.setObjectNotExistsAsync("disk." + disk.device_name + ".used_h", {
+							type: "state",
+							common: {
+								name: "Used size human readable",
+								"role": "text",
+								"type": "number",
+								"unit": disk_used_h.unit,
+								"read": true,
+								"write": false
+							},
+							native: {},
+						});
+						await this.setStateAsync("disk." + disk.device_name + ".used_h", disk_used_h.val, true);
+
+						//disk size free
 						await this.setObjectNotExistsAsync("disk." + disk.device_name + ".free", {
 							type: "state",
 							common: {
-								name: "Total size",
+								name: "Free size",
 								"role": "text",
 								"type": "number",
 								"unit": "B",
@@ -183,6 +257,24 @@ class Glances extends utils.Adapter {
 						});
 						await this.setStateAsync("disk." + disk.device_name + ".free", disk.free, true);
 
+
+						//disk free size human readable
+						var disk_free_h = this.calcSize(disk.free);
+						await this.setObjectNotExistsAsync("disk." + disk.device_name + ".free_h", {
+							type: "state",
+							common: {
+								name: "Free size human readable",
+								"role": "text",
+								"type": "number",
+								"unit": disk_free_h.unit,
+								"read": true,
+								"write": false
+							},
+							native: {},
+						});
+						await this.setStateAsync("disk." + disk.device_name + ".free_h", disk_free_h.val, true);
+
+						//disk percent
 						await this.setObjectNotExistsAsync("disk." + disk.device_name + ".percent", {
 							type: "state",
 							common: {
@@ -202,6 +294,18 @@ class Glances extends utils.Adapter {
 				console.log("Failed to fetch disk data: " + error.response.body);
 			}
 		}
+	}
+
+	calcSize(size) {
+		const units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+		let l = 0, n = parseInt(size, 10) || 0;
+		while (n >= 1024 && ++l) {
+			n = n / 1024;
+		}
+
+		var val = n.toFixed(n < 10 && l > 0 ? 1 : 0);
+		var unit = units[l];
+		return { val: val, unit: unit };
 	}
 
 	/**
