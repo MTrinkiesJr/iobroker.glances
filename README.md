@@ -111,7 +111,7 @@ For later updates, the above procedure is not necessary. Just do the following:
 -->
 
 ### **WORK IN PROGRESS**
-### 0.0.2-alpha.0 (2022-09-22)
+### 0.0.1 (2022-09-22)
 * (Michael Trinkies) initial release
 
 ## License

@@ -1,6 +1,6 @@
 {
   "name": "iobroker.glances",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Imports system data from Glances via the integrated server",
   "author": {
     "name": "Michael Trinkies",
